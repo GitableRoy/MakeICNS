@@ -7,6 +7,6 @@ This is a quick script that makes a macOS ICNS file out of your PNGs, JPGs, TIFs
 
 ## Usage
 
-To use simply:
+To use:
 + `./makeicns.sh [file(s)]`
 + Example: `./makeicns.sh ~/Pictures/hello.png ~/Pictures/world.jpg`
