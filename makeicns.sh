@@ -49,19 +49,31 @@ for file in "$@"
     # create necessary icns files in /tmp
     mkdir /tmp/iconbuilder.iconset
 
-    magick convert $file -resize 512x512! -fuzz 01% -transparent white /tmp/iconbuilder.iconset/"icon_512x512.png"
-    magick convert $file -resize 256x256! -fuzz 01% -transparent white /tmp/iconbuilder.iconset/"icon_256x256.png"
-    magick convert $file -resize 128x128! -fuzz 01% -transparent white /tmp/iconbuilder.iconset/"icon_128x128.png"
-    magick convert $file -resize 64x64! -fuzz 01% -transparent white /tmp/iconbuilder.iconset/"icon_64x64.png"
-    magick convert $file -resize 32x32! -fuzz 01% -transparent white /tmp/iconbuilder.iconset/"icon_32x32.png"
-    magick convert $file -resize 16x16! -fuzz 01% -transparent white /tmp/iconbuilder.iconset/"icon_16x16.png"
+    magick convert $file -resize 512x512! -fuzz 01% -transparent white \
+        -quality 100 /tmp/iconbuilder.iconset/"icon_512x512.png"
+    magick convert $file -resize 256x256! -fuzz 01% -transparent white \
+        -quality 100 /tmp/iconbuilder.iconset/"icon_256x256.png"
+    magick convert $file -resize 128x128! -fuzz 01% -transparent white \
+        -quality 100 /tmp/iconbuilder.iconset/"icon_128x128.png"
+    magick convert $file -resize 64x64! -fuzz 01% -transparent white \
+        -quality 100 /tmp/iconbuilder.iconset/"icon_64x64.png"
+    magick convert $file -resize 32x32! -fuzz 01% -transparent white \
+        -quality 100 /tmp/iconbuilder.iconset/"icon_32x32.png"
+    magick convert $file -resize 16x16! -fuzz 01% -transparent white \
+        -quality 100 /tmp/iconbuilder.iconset/"icon_16x16.png"
 
-    magick convert $file -resize 512x512! -fuzz 01% -transparent white /tmp/iconbuilder.iconset/"icon_512x512@2x.png"
-    magick convert $file -resize 256x256! -fuzz 01% -transparent white /tmp/iconbuilder.iconset/"icon_256x256@2x.png"
-    magick convert $file -resize 128x128! -fuzz 01% -transparent white /tmp/iconbuilder.iconset/"icon_128x128@2x.png"
-    magick convert $file -resize 64x64! -fuzz 01% -transparent white /tmp/iconbuilder.iconset/"icon_64x64@2x.png"
-    magick convert $file -resize 32x32! -fuzz 01% -transparent white /tmp/iconbuilder.iconset/"icon_32x32@2x.png"
-    magick convert $file -resize 16x16! -fuzz 01% -transparent white /tmp/iconbuilder.iconset/"icon_16x16@2x.png"
+    magick convert $file -resize 512x512! -fuzz 01% -transparent white \
+        -quality 100 /tmp/iconbuilder.iconset/"icon_512x512@2x.png"
+    magick convert $file -resize 256x256! -fuzz 01% -transparent white \
+        -quality 100 /tmp/iconbuilder.iconset/"icon_256x256@2x.png"
+    magick convert $file -resize 128x128! -fuzz 01% -transparent white \
+        -quality 100 /tmp/iconbuilder.iconset/"icon_128x128@2x.png"
+    magick convert $file -resize 64x64! -fuzz 01% -transparent white \
+        -quality 100 /tmp/iconbuilder.iconset/"icon_64x64@2x.png"
+    magick convert $file -resize 32x32! -fuzz 01% -transparent white \
+        -quality 100 /tmp/iconbuilder.iconset/"icon_32x32@2x.png"
+    magick convert $file -resize 16x16! -fuzz 01% -transparent white \
+        -quality 100 /tmp/iconbuilder.iconset/"icon_16x16@2x.png"
 
     iconutil --convert icns --output $filename".icns" /tmp/iconbuilder.iconset
 
@@ -69,8 +81,10 @@ for file in "$@"
     # clean up by removing iconbuilder.folder
     rm -rf /tmp/iconbuilder.iconset
 
-    # remove extra file if resize was necessary
+    # remove extra file if resize was necessary and change .icns to original filename
     if [[ $filename == *"resize"* ]]; then
+      $ofilename = $(echo $filename | cut -d "_" -f1)
+      mv $filename".icns" $ofilename".icns"
       rm $(echo $filename".png")
     fi
 
